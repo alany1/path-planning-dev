@@ -10,9 +10,9 @@ setup(
     version='0.0.0',
     packages=find_packages(exclude=['test']),
     data_files=[
-        ('share/'+package_name, ['package.xml']),
+        ('share/' + package_name, ['package.xml']),
         ('share/ament_index/resource_index/packages',
-            ['resource/' + package_name]),
+         ['resource/' + package_name]),
         ('share/path_planning/launch', glob.glob(os.path.join('launch', '*launch.xml'))),
         ('share/path_planning/trajectories', glob.glob(os.path.join('trajectories', '*.traj')))],
     install_requires=['setuptools'],
@@ -25,7 +25,8 @@ setup(
     entry_points={
         'console_scripts': [
             'trajectory_builder = path_planning.trajectory_builder:main',
-            'trajectory_loader = path_planning.trajectory_loader:main'
+            'trajectory_loader = path_planning.trajectory_loader:main',
+            'trajectory_planner = path_planning.path_planning:main'
         ],
     },
 )

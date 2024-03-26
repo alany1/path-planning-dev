@@ -2,21 +2,22 @@ import rclpy
 
 import numpy as np
 from visualization_msgs.msg import Marker
-from geometry_msgs.msg import Point, Pose, PoseArray, Point32
+from geometry_msgs.msg import Pose, PoseArray, Point
 from std_msgs.msg import Header
 
 import json
-
-
 
 EPSILON = 0.00000000001
 
 ''' These data structures can be used in the search function
 '''
 
-class LineTrajectory():
+
+class LineTrajectory:
     """ A class to wrap and work with piecewise linear trajectories. """
+
     def __init__(self, node, viz_namespace=None):
+        print('wtf top', node, viz_namespace)
         self.points = []
         self.distances = []
         self.has_acceleration = False
@@ -27,26 +28,27 @@ class LineTrajectory():
         if viz_namespace:
             self.visualize = True
             self.start_pub = self.node.create_publisher(Marker, viz_namespace + "/start_point", 1)
-            self.traj_pub  = self.node.create_publisher(Marker, viz_namespace + "/path", 1)
-            self.end_pub   = self.node.create_publisher(Marker, viz_namespace + "/end_pose", 1)
+            self.traj_pub = self.node.create_publisher(Marker, viz_namespace + "/path", 1)
+            self.end_pub = self.node.create_publisher(Marker, viz_namespace + "/end_pose", 1)
 
     # compute the distances along the path for all path segments beyond those already computed
     def update_distances(self):
         num_distances = len(self.distances)
         num_points = len(self.points)
 
-        for i in range(num_distances,num_points):
+        for i in range(num_distances, num_points):
             if i == 0:
                 self.distances.append(0)
             else:
-                p0 = self.points[i-1]
+                p0 = self.points[i - 1]
                 p1 = self.points[i]
-                delta = np.array([p0[0]-p1[0],p0[1]-p1[1]])
-                self.distances.append(self.distances[i-1] + np.linalg.norm(delta))
+                delta = np.array([p0[0] - p1[0], p0[1] - p1[1]])
+                self.distances.append(self.distances[i - 1] + np.linalg.norm(delta))
 
     def distance_to_end(self, t):
         if not len(self.points) == len(self.distances):
-            print("WARNING: Different number of distances and points, this should never happen! Expect incorrect results. See LineTrajectory class.")
+            print(
+                "WARNING: Different number of distances and points, this should never happen! Expect incorrect results. See LineTrajectory class.")
         dat = self.distance_along_trajectory(t)
         if dat == None:
             return None
@@ -58,16 +60,16 @@ class LineTrajectory():
         # ensure path boundaries are respected
         if t < 0 or t > len(self.points) - 1.0:
             return None
-        i = int(t) # which segment
-        t = t % 1.0 # how far along segment
+        i = int(t)  # which segment
+        t = t % 1.0  # how far along segment
         if t < EPSILON:
             return self.distances[i]
         else:
-            return (1.0-t)*self.distances[i] + t*self.distances[i+1]
+            return (1.0 - t) * self.distances[i] + t * self.distances[i + 1]
 
     def addPoint(self, point):
-        print("adding point to trajectory:", point.x, point.y)
-        self.points.append((point.x, point.y))
+        print("adding point to trajectory:", point)
+        self.points.append(point)
         self.update_distances()
         self.mark_dirty()
 
@@ -125,14 +127,15 @@ class LineTrajectory():
 
     def publish_start_point(self, duration=0.0, scale=0.1):
         should_publish = len(self.points) > 0
+        self.node.get_logger().info("Before Publishing start point")
         if self.visualize and self.start_pub.get_subscription_count() > 0:
-            print("Publishing start point")
+            self.node.get_logger().info("Publishing start point")
             marker = Marker()
             marker.header = self.make_header("/map")
             marker.ns = self.viz_namespace + "/trajectory"
             marker.id = 0
-            marker.type = 2 # sphere
-            marker.lifetime = rclpy.duration.Duration(seconds=duration)
+            marker.type = 2  # sphere
+            marker.lifetime = rclpy.duration.Duration(seconds=duration).to_msg()
             if should_publish:
                 marker.action = 0
                 marker.pose.position.x = self.points[0][0]
@@ -150,19 +153,20 @@ class LineTrajectory():
                 marker.action = 2
 
             self.start_pub.publish(marker)
+            self.node.get_logger().info("done start")
         elif self.start_pub.get_subscription_count() == 0:
-            print ("Not publishing start point, no subscribers")
+            self.node.get_logger().info("Not publishing start point, no subscribers")
 
     def publish_end_point(self, duration=0.0):
         should_publish = len(self.points) > 1
         if self.visualize and self.end_pub.get_subscription_count() > 0:
-            print("Publishing end point")
+            self.node.get_logger().info("Publishing end point")
             marker = Marker()
             marker.header = self.make_header("/map")
             marker.ns = self.viz_namespace + "/trajectory"
             marker.id = 1
-            marker.type = 2 # sphere
-            marker.lifetime = rclpy.duration.Duration(seconds=duration)
+            marker.type = 2  # sphere
+            marker.lifetime = rclpy.duration.Duration(seconds=duration).to_msg()
             if should_publish:
                 marker.action = 0
                 marker.pose.position.x = self.points[-1][0]
@@ -180,19 +184,20 @@ class LineTrajectory():
                 marker.action = 2
 
             self.end_pub.publish(marker)
+            self.node.get_logger().info("Done end")
         elif self.end_pub.get_subscription_count() == 0:
             print("Not publishing end point, no subscribers")
 
     def publish_trajectory(self, duration=0.0):
         should_publish = len(self.points) > 1
         if self.visualize and self.traj_pub.get_subscription_count() > 0:
-            print("Publishing trajectory")
+            self.node.get_logger().info("Publishing trajectory")
             marker = Marker()
             marker.header = self.make_header("/map")
             marker.ns = self.viz_namespace + "/trajectory"
             marker.id = 2
-            marker.type = marker.LINE_STRIP # line strip
-            marker.lifetime = rclpy.duration.Duration(seconds=duration)
+            marker.type = marker.LINE_STRIP  # line strip
+            marker.lifetime = rclpy.duration.Duration(seconds=duration).to_msg()
             if should_publish:
                 marker.action = marker.ADD
                 marker.scale.x = 0.3
@@ -201,7 +206,7 @@ class LineTrajectory():
                 marker.color.b = 1.0
                 marker.color.a = 1.0
                 for p in self.points:
-                    pt = Point32()
+                    pt = Point()
                     pt.x = p[0]
                     pt.y = p[1]
                     pt.z = 0.0
@@ -218,13 +223,14 @@ class LineTrajectory():
         if not self.visualize:
             print("Cannot visualize path, not initialized with visualization enabled")
             return
-
+        self.node.get_logger().info('what the hell')
         self.publish_start_point(duration=duration)
         self.publish_trajectory(duration=duration)
         self.publish_end_point(duration=duration)
 
     def make_header(self, frame_id, stamp=None):
         if stamp == None:
+            self.node.get_logger().info(f'wtf {self.node} type {type(self.node)}')
             stamp = self.node.get_clock().now().to_msg()
         header = Header()
         header.stamp = stamp
