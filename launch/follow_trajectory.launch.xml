@@ -1,5 +1,6 @@
 <launch>
-	<node pkg="path_planning" exec="pure_pursuit" name="Trajectory_follower">
-		<param name="odom_topic" value="/pf/pose/odom"/>
-	</node>
+    <node pkg="path_planning" exec="trajectory_follower" name="Trajectory_follower">
+        <param name="odom_topic" value="/odom"/>
+        <param name="drive_topic" value="/drive"/>
+    </node>
 </launch>

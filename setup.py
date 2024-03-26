@@ -26,7 +26,8 @@ setup(
         'console_scripts': [
             'trajectory_builder = path_planning.trajectory_builder:main',
             'trajectory_loader = path_planning.trajectory_loader:main',
-            'trajectory_planner = path_planning.path_planning:main'
+            'trajectory_planner = path_planning.path_planning:main',
+            'trajectory_follower = path_planning.pure_pursuit:main'
         ],
     },
 )
