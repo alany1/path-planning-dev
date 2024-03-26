@@ -4,7 +4,8 @@ import numpy as np
 from visualization_msgs.msg import Marker
 from geometry_msgs.msg import Pose, PoseArray, Point
 from std_msgs.msg import Header
-
+import os
+from typing import List, Tuple
 import json
 
 EPSILON = 0.00000000001
@@ -17,8 +18,7 @@ class LineTrajectory:
     """ A class to wrap and work with piecewise linear trajectories. """
 
     def __init__(self, node, viz_namespace=None):
-        print('wtf top', node, viz_namespace)
-        self.points = []
+        self.points: List[Tuple[float, float]] = []
         self.distances = []
         self.has_acceleration = False
         self.visualize = False
@@ -67,7 +67,7 @@ class LineTrajectory:
         else:
             return (1.0 - t) * self.distances[i] + t * self.distances[i + 1]
 
-    def addPoint(self, point):
+    def addPoint(self, point: Tuple[float, float]) -> None:
         print("adding point to trajectory:", point)
         self.points.append(point)
         self.update_distances()
@@ -98,6 +98,10 @@ class LineTrajectory:
 
     def load(self, path):
         print("Loading trajectory:", path)
+
+        # resolve all env variables in path
+        path = os.path.expandvars(path)
+
         with open(path) as json_file:
             json_data = json.load(json_file)
             for p in json_data["points"]:

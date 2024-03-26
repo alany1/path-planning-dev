@@ -16,6 +16,7 @@ class LoadTrajectory(Node):
 
         # initialize and load the trajectory
         self.trajectory = LineTrajectory(self, "/loaded_trajectory")
+        self.get_logger().info(f"Loading from {self.path}")
         self.trajectory.load(self.path)
 
         self.pub_topic = "/trajectory/current"
