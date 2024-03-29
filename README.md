@@ -163,7 +163,7 @@ We would like you to also think of ways to evaluate the performance of your path
 have provided 3 example trajectories from the staff solution in the `example_trajectories`
 folder. Check out the `launch/debug/load_trajectory.launch.xml` for how you can view these. However, note that simply
 comparing your solutions to the staff solution is insufficient evaluation. To view the paths in RViz, the visualization
-topics are added **before** the load.
+topics should be added **before** the load.
 
 ![rviz_menu.png](media%2Frviz_menu.png)
 
@@ -311,7 +311,7 @@ desired, trajectory representations.
 **Pure Pursuit Requirements (`path_planning/trajectory_follower.py`)**
 
 1. Manually define or load a saved path. We have provided a framework to create these with clicks on the Rviz map (
-   described below in Trajectory Utilities). See how to do this with the `launch/debug/load_trajectory.launch` file. You
+   described below in Trajectory Utilities). See how to do this with the `launch/debug/load_trajectory.launch.xml` file. You
    can visualize
    the loaded trajectory path, start point, and end pose on the “/loaded_trajectory/path”,
    “/loaded_trajectory/start_point”, “loaded_trajectory/end_pose” topics in RViz.
