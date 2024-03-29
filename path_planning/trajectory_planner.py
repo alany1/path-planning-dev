@@ -213,7 +213,6 @@ class PathPlan(Node):
 
         # visualize trajectory Markers
         self.trajectory.publish_viz()
-        # self.get_logger().info("Published trajectory")
         self.get_logger().info("The path length is " + str(self.trajectory.distances[-1]) + " and consists of " + str(
             len(self.trajectory.points)) + " points.")
         self.get_logger().info("It took " + str(planning_time) + "seconds.")

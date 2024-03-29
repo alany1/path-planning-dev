@@ -136,7 +136,7 @@ In this section, you will plan trajectories and display them in RViz. You will u
 goal positions in your map. Then, your path planning algorithm will construct a collision free trajectory. To ease
 integration, make sure your inputs and outputs align between your path planning and pure pursuit modules.
 
-**Path Planning Requirements** (`path_planning/src/path_planning.py`)
+**Path Planning Requirements** (`path_planning/trajectory_planner.py`)
 
 - This node must use the car’s current position as the starting point for the path planner. When testing and developing,
   feel free to use the ground truth pose of the car published to “/odom”. Remember, you can move the car around the map
@@ -158,6 +158,14 @@ You can test this part of the lab by running `ros2 launch path_planning sim_plan
 planning node with the parameters defined in `config/sim/sim_config`. Double check these parameters if nothing seems to
 be running! Also, depending on your implementation, you may need to re-run the simulator __after__ this launch file,
 since the `/map` topic only publishes once.
+
+We would like you to also think of ways to evaluate the performance of your path planning algorithm. As a baseline, we
+have provided 3 example trajectories from the staff solution in the `example_trajectories`
+folder. Check out the `launch/debug/load_trajectory.launch.xml` for how you can view these. However, note that simply
+comparing your solutions to the staff solution is insufficient evaluation. To view the paths in RViz, the visualization
+topics are added **before** the load.
+
+![rviz_menu.png](media%2Frviz_menu.png)
 
 Here are a few options for representation of a trajectory:
 
@@ -406,9 +414,15 @@ your own algorithms to get to the goal point on the map. Check out these RViz fu
 - “Publish Point” → /clicked_point
 
 In simulation, you can test with the ground truth odometry (no particle filter) by
-running `ros2 launch path_planning sim_plan_follow.launch.xml`. Again, this uses the paramters
-from `config/sim/sim_config`, so double check these if nothing seems to be working! To test the system with your
-particle filter, run `ros2 launch path_planning pf_sim_plan_follow.launch.xml`.
+running
+
+`ros2 launch path_planning sim_plan_follow.launch.xml`.
+
+Again, this uses the paramters from `config/sim/sim_config`, so double check these if nothing seems to be working! To
+test the system with your
+particle filter, run
+
+`ros2 launch path_planning pf_sim_plan_follow.launch.xml`.
 
 Once you have demonstrated this capability in the simple simulator, it's time to deploy your system in real life!
 
