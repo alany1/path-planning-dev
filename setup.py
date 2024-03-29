@@ -14,6 +14,7 @@ setup(
         ('share/ament_index/resource_index/packages',
          ['resource/' + package_name]),
         ('share/path_planning/launch/sim', glob.glob(os.path.join('launch', 'sim', '*launch.*'))),
+        ('share/path_planning/launch/debug', glob.glob(os.path.join('launch', 'debug', '*launch.*'))),
         (os.path.join('share', package_name, 'config', 'sim'), glob.glob('config/sim/*.yaml')),
         (os.path.join('share', package_name, 'config', 'debug'), glob.glob('config/debug/*.yaml')),
         ('share/path_planning/trajectories', glob.glob(os.path.join('trajectories', '*.traj')))],
