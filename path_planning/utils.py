@@ -157,14 +157,12 @@ class LineTrajectory:
                 marker.action = 2
 
             self.start_pub.publish(marker)
-            self.node.get_logger().info("done start")
         elif self.start_pub.get_subscription_count() == 0:
             self.node.get_logger().info("Not publishing start point, no subscribers")
 
     def publish_end_point(self, duration=0.0):
         should_publish = len(self.points) > 1
         if self.visualize and self.end_pub.get_subscription_count() > 0:
-            self.node.get_logger().info("Publishing end point")
             marker = Marker()
             marker.header = self.make_header("/map")
             marker.ns = self.viz_namespace + "/trajectory"
@@ -188,7 +186,6 @@ class LineTrajectory:
                 marker.action = 2
 
             self.end_pub.publish(marker)
-            self.node.get_logger().info("Done end")
         elif self.end_pub.get_subscription_count() == 0:
             print("Not publishing end point, no subscribers")
 
@@ -227,14 +224,12 @@ class LineTrajectory:
         if not self.visualize:
             print("Cannot visualize path, not initialized with visualization enabled")
             return
-        self.node.get_logger().info('what the hell')
         self.publish_start_point(duration=duration)
         self.publish_trajectory(duration=duration)
         self.publish_end_point(duration=duration)
 
     def make_header(self, frame_id, stamp=None):
         if stamp == None:
-            self.node.get_logger().info(f'wtf {self.node} type {type(self.node)}')
             stamp = self.node.get_clock().now().to_msg()
         header = Header()
         header.stamp = stamp
