@@ -167,6 +167,10 @@ topics are added **before** the load.
 
 ![rviz_menu.png](media%2Frviz_menu.png)
 
+The path should look something like this:
+
+![example_path.png](media%2Fexample_path.png)
+
 Here are a few options for representation of a trajectory:
 
 - Piecewise - (x,y,[theta]) points
