@@ -10,13 +10,15 @@ import heapq
 from scipy import ndimage
 import tf_transformations as tfm
 import time
+
+
 class PathPlan(Node):
     """ Listens for goal pose published by RViz and uses it to plan a path from
     current car pose.
     """
 
     def __init__(self):
-        super().__init__("path_planner")
+        super().__init__("trajectory_planner")
         self.declare_parameter('odom_topic', "default")
         self.declare_parameter('map_topic', "default")
         self.declare_parameter('initial_pose_topic', "default")
@@ -106,26 +108,6 @@ class PathPlan(Node):
     def euclidean_heuristic(distance, path, end_point):
         return distance + np.linalg.norm(np.array(end_point) - np.array(path[-1])) + len(path)
 
-    # def odom_cb(self, msg):
-    #     old_start_position = self.start_position
-    #     if self.map is None:
-    #         return
-    #     # get current car pose
-    #     if self.devel:
-    #         self.start = msg.pose.pose.position, msg.pose.pose.orientation
-    #         self.start_position = self.convertMapToOG((self.start[0].x, self.start[0].y)) # int(self.start[0].x), int(self.start[0].y)
-    #         self.start_position = (int(self.start_position[0]), int(self.start_position[1]))
-    #         self.start_orientation = self.start[1].z, self.start[1].w
-    #         # self.get_logger().info("Received current position: {}".format(msg.pose.pose.position))
-    #         # self.get_logger().info("Converted current position: {}".format(self.start_position))
-    #         # self.start_pose = (self.start_position, self.start_orientation)
-    #     else:
-    #         raise NotImplementedError("TODO: need to use localization for non-development setting.")
-
-    #     if self.set and self.start_position != old_start_position:
-    #         # self.get_logger().info("Planning Path")
-    #         self.plan_path(self.start_position, self.goal_position, self.map, PathPlan.euclidean_heuristic)
-
     def pose_cb(self, pose):
         if self.map is None:
             self.get_logger().info('not set')
@@ -192,11 +174,11 @@ class PathPlan(Node):
         front = [(np.linalg.norm(np.array(end_point) - np.array(start_point)), 0, start_point, None)]
 
         while front:
-            
+
             if time.perf_counter() - start_time > 10:
                 self.get_logger().info("Took too long")
                 break
-            
+
             next = heapq.heappop(front)
             fn, gn, pos, previous = next
 

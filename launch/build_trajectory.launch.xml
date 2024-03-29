@@ -1,3 +1,0 @@
-<launch>
-	<node pkg="path_planning" exec="trajectory_builder" name="Trajectory_builder" output="screen"/>
-</launch>

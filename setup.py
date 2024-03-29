@@ -13,7 +13,9 @@ setup(
         ('share/' + package_name, ['package.xml']),
         ('share/ament_index/resource_index/packages',
          ['resource/' + package_name]),
-        ('share/path_planning/launch', glob.glob(os.path.join('launch', '*launch.xml'))),
+        ('share/path_planning/launch/sim', glob.glob(os.path.join('launch', 'sim', '*launch.*'))),
+        (os.path.join('share', package_name, 'config', 'sim'), glob.glob('config/sim/*.yaml')),
+        (os.path.join('share', package_name, 'config', 'debug'), glob.glob('config/debug/*.yaml')),
         ('share/path_planning/trajectories', glob.glob(os.path.join('trajectories', '*.traj')))],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -26,8 +28,8 @@ setup(
         'console_scripts': [
             'trajectory_builder = path_planning.trajectory_builder:main',
             'trajectory_loader = path_planning.trajectory_loader:main',
-            'trajectory_planner = path_planning.path_planning:main',
-            'trajectory_follower = path_planning.pure_pursuit:main'
+            'trajectory_planner = path_planning.trajectory_planner:main',
+            'trajectory_follower = path_planning.trajectory_follower:main'
         ],
     },
 )

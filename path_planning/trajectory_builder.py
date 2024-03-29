@@ -20,7 +20,7 @@ class BuildTrajectory(Node):
     """
 
     def __init__(self):
-        super().__init__("build_trajectory")
+        super().__init__("trajectory_builder")
 
         save_prefix = os.path.join(os.environ["HOME"], "lab6_trajectories")
 

@@ -1,5 +1,0 @@
-<launch>
-	<node pkg="path_planning" exec="trajectory_loader" name="Trajectory_loader">
-		<param name="trajectory" value="$HOME/lab6_trajectories/example.traj"/>
-	</node>
-</launch>

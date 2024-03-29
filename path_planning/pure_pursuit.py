@@ -1,15 +1,14 @@
-import numpy as np
-from .utils import LineTrajectory
 import math
-from tf_transformations import euler_from_quaternion
-
-from nav_msgs.msg import Odometry
-
-from geometry_msgs.msg import PoseArray
-from visualization_msgs.msg import Marker
-from ackermann_msgs.msg import AckermannDriveStamped
+import numpy as np
 import rclpy
+from ackermann_msgs.msg import AckermannDriveStamped
+from geometry_msgs.msg import PoseArray
+from nav_msgs.msg import Odometry
 from rclpy.node import Node
+from tf_transformations import euler_from_quaternion
+from visualization_msgs.msg import Marker
+
+from .utils import LineTrajectory
 
 
 class PurePursuit(Node):
@@ -17,7 +16,7 @@ class PurePursuit(Node):
     """
 
     def __init__(self):
-        super().__init__("pure_pursuit")
+        super().__init__("trajectory_follower")
         self.declare_parameter('odom_topic', "default")
         self.declare_parameter('drive_topic', "default")
 
@@ -26,7 +25,7 @@ class PurePursuit(Node):
 
         self.lookahead = .5
         self.speed = 2.0
-        self.wheelbase_length = .325
+        self.trajectory_follower = .325
 
         self.trajectory = LineTrajectory("/followed_trajectory")
 
@@ -150,9 +149,9 @@ class PurePursuit(Node):
         return (v1[0] * v2[0], v1[1] * v2[1])
 
     def pose_callback(self, odometry_msg):
-        
+
         pose = odometry_msg.pose
-        
+
         points = self.trajectory.points
 
         if not self.initialized_traj or not points: return
@@ -195,7 +194,7 @@ class PurePursuit(Node):
 
         distance = math.sqrt(V[0] ** 2 + V[1] ** 2)  # distance to intersect point
 
-        delta = math.atan(2 * self.wheelbase_length * np.sin(angle) / distance)  # pure pursuit equation
+        delta = math.atan(2 * self.trajectory_follower * np.sin(angle) / distance)  # pure pursuit equation
 
         drive_cmd = AckermannDriveStamped()
         drive_cmd.drive.steering_angle = delta  # setting car angle
