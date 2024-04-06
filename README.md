@@ -1,10 +1,9 @@
-| Deliverable                                                                                                                               | Due Date                             |
-|-------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------|
-| Slide Draft (draft due on [github pages](https://github.com/mit-rss/website2022))                                                         | Friday, April 14th at 1:00PM EST     |
-| Briefing (8 min presentation + 3 min Q&A) (slides due on [github pages](https://github.com/mit-rss/website2022))                          | Wednesday, April 19th at 1:00 PM EST |
-| Report (on [team github pages website](https://github.com/mit-rss/website2022))                                                           | Wednesday, April 26th at 11:59PM EST |
-| Pushed code to Git                                                                                                                        | Wednesday, April 26th at 11:59PM EST |
-| [Team Member Assessment](https://docs.google.com/forms/d/e/1FAIpQLSc20FhV9aidNvZlk5sr5uPR5zAObYsneDYGyHa197Q2iqbtMA/viewform?usp=sf_link) | Wednesday, April 26th at 11:59PM EST |
+| Deliverable                                                            | Due Date                             |
+|------------------------------------------------------------------------|--------------------------------------|
+| Briefing (8 min presentation + 3 min Q&A) (slides due on github pages) | Wednesday, April 24th at 1:00 PM EST |
+| Report (on github pages)                                               | Friday, April 26th at 11:59PM EST    |
+| Pushed code to Git                                                     | Friday, April 26th at 11:59PM EST    |
+| Team Member Assessment (Link coming soon!)                             | Friday, April 26th at 11:59PM EST    |
 
 # Lab 6: Path Planning
 
@@ -12,7 +11,6 @@ Table of Contents
 
 * [Introduction](https://github.com/mit-rss/path_planning#introduction)
 * [Grading](https://github.com/mit-rss/path_planning#introduction)
-    * [Gradescope Evaluation](https://github.com/mit-rss/path_planning#gradescope-evaluation-10-points) (10 points)
     * [Briefing Evaluation](https://github.com/mit-rss/path_planning#briefing-evaluation-see-technical-briefing-rubric-for-grading-details) (
       see technical briefing rubric for grading details)
     * [Report Evaluation](https://github.com/mit-rss/path_planning#report-evaluation-see-technical-report-rubric-for-grading-details) (
@@ -67,11 +65,11 @@ modifications and tuning, so it is to your advantage to write good algorithms fo
 
 This section details the grading scheme for Lab 6.
 
-| Deliverable Grade                 | Weighting                 |
-|-----------------------------------|---------------------------|
-| gradescope submission (out of 10) | (CANCELLED, formerly 25%) |
-| briefing grade (out of 10)        | 35%                       |
-| report grade (out of 10)          | 40%                       |
+| Deliverable Grade          | Weighting |
+|----------------------------|-----------|
+| TA Checkoff                | 25%       |
+| briefing grade (out of 10) | 35%       |
+| report grade (out of 10)   | 40%       |
 
 ### Briefing Evaluation (see [technical briefing rubric](https://docs.google.com/document/d/1NmqQP7n1omI9bIshF1Y-MP70gfDkgEeoMjpWv8hjfsY/edit?usp=sharing) for grading details)
 
@@ -311,7 +309,8 @@ desired, trajectory representations.
 **Pure Pursuit Requirements (`path_planning/trajectory_follower.py`)**
 
 1. Manually define or load a saved path. We have provided a framework to create these with clicks on the Rviz map (
-   described below in Trajectory Utilities). See how to do this with the `launch/debug/load_trajectory.launch.xml` file. You
+   described below in Trajectory Utilities). See how to do this with the `launch/debug/load_trajectory.launch.xml` file.
+   You
    can visualize
    the loaded trajectory path, start point, and end pose on the “/loaded_trajectory/path”,
    “/loaded_trajectory/start_point”, “loaded_trajectory/end_pose” topics in RViz.
@@ -433,4 +432,4 @@ Once you have demonstrated this capability in the simple simulator, it's time to
 We recommend making another set of launch files and configs similar to the `sim` ones, so that things stay organized.
 You should be able to reliably drive your car around the stata basement by clicking points in RViz to specify
 trajectories and by planning your own algorithms between two clicked points on the map. In our experience, this is one
-of the coolest and most rewarding parts of the class!
+of the coolest and most rewarding parts of the class! Please, have fun!
