@@ -1,9 +1,9 @@
-| Deliverable                                                            | Due Date                              |
-|------------------------------------------------------------------------|---------------------------------------|
-| Briefing (8 min presentation + 3 min Q&A) (slides due on github pages) | Wednesday, April 24th at 1:00 PM EST  |
-| Report (on github pages)                                               | Friday, April 26th at 11:59PM EST     |
-| Pushed code to Git                                                     | Friday, April 26th at 11:59PM EST     |
-| [Team Member Assessment](https://forms.gle/QMLaatrydFqXdXYF8)                            | Friday, April 26th at 11[:59PM EST  ] |
+| Deliverable                                                            | Due Date                             |
+|------------------------------------------------------------------------|--------------------------------------|
+| Briefing (8 min presentation + 3 min Q&A) (slides due on github pages) | Wednesday, April 24th at 1:00 PM EST |
+| Report (on github pages)                                               | Friday, April 26th at 11:59PM EST    |
+| Pushed code to Git                                                     | Friday, April 26th at 11:59PM EST    |
+| [Team Member Assessment](https://forms.gle/QMLaatrydFqXdXYF8)                            | Friday, April 26th at 11:59PM EST |
 
 # Lab 6: Path Planning
 
